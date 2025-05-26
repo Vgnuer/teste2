@@ -76,6 +76,8 @@ app.use("/api/students", studentsRoutes);
 app.use("/api/subjects", subjectRoutes);
 app.use("/api/documents", documentRoutes);
 
+// Certifique-se de que não há uso incorreto de path-to-regexp
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error('Error:', err);
