@@ -69,6 +69,24 @@ app.get("/api/test", (req, res) => {
     timestamp: new Date().toISOString()
   });
 });
+
+// Ensure all route parameters are properly formatted
+app.use("/api", (req, res, next) => {
+  try {
+    next();
+  } catch (error) {
+    if (error instanceof TypeError && error.message.includes('Missing parameter name')) {
+      console.error('Route parameter error:', error);
+      res.status(400).json({
+        message: 'Invalid route parameter',
+        error: process.env.NODE_ENV === 'production' ? {} : error.message
+      });
+    } else {
+      next(error);
+    }
+  }
+});
+
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
@@ -76,28 +94,42 @@ app.use("/api/students", studentsRoutes);
 app.use("/api/subjects", subjectRoutes);
 app.use("/api/documents", documentRoutes);
 
-// Certifique-se de que não há uso incorreto de path-to-regexp
-
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error('Error:', err);
+  
+  if (err instanceof TypeError && err.message.includes('Missing parameter name')) {
+    return res.status(400).json({
+      message: 'Invalid route parameter',
+      error: process.env.NODE_ENV === 'production' ? 'Invalid route parameter' : err.message
+    });
+  }
+
   res.status(500).json({
     message: 'Internal server error',
-    error: process.env.NODE_ENV === 'production' ? {} : err
+    error: process.env.NODE_ENV === 'production' ? 'Internal server error' : err.message
   });
 });
 
-// 404 handler
-app.use('*', (req, res) => {
+// 404 handler - should be last
+app.use((req, res) => {
   res.status(404).json({
     message: 'Route not found',
     path: req.originalUrl
   });
 });
 
-// Iniciar servidor
+// Verificar variáveis de ambiente
+console.log("✅ Verificando variáveis de ambiente...");
+console.log("PORT:", process.env.PORT);
+console.log("DB_HOST:", process.env.DB_HOST);
+console.log("DB_NAME:", process.env.DB_NAME);
+console.log("DB_USER:", process.env.DB_USER);
+console.log("DB_PASSWORD:", process.env.DB_PASSWORD);
+
+// Log de inicialização do servidor
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`Database: ${process.env.DB_HOST}`);
+  console.log(`✅ Server running on port ${PORT}`);
+  console.log(`✅ Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`✅ Database Host: ${process.env.DB_HOST}`);
 });

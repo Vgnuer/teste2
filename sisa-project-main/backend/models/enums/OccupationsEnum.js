@@ -1,10 +1,9 @@
 const sequelize = require("../../config");
 
-const OccupationsEnum = sequelize.define('OccupationsEnum', {
-    ADMINISTRADOR: 'Administrador',
-    COLABORADOR: 'Colaborador',
-    PROFESSOR: 'Professor'
-});
+const OccupationsEnum = [
+    'Administrador',
+    'Colaborador',
+    'Professor'
+];
 
 module.exports = OccupationsEnum;
-  

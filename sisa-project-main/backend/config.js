@@ -21,9 +21,7 @@ const sequelize = new Sequelize(
     },
     dialectOptions: {
       // Configurações para conexão segura se necessário
-      connectTimeout: 60000,
-      acquireTimeout: 60000,
-      timeout: 60000,
+      connectTimeout: 60000
     }
   }
 );
