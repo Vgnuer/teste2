@@ -1,12 +1,11 @@
-const { DataTypes, ENUM } = require("sequelize");
+const { DataTypes } = require("sequelize");
 const sequelize = require("../config");
-const OccupationsEnum = require("./enums/OccupationsEnum");
 
 const User = sequelize.define("user", {
   name: DataTypes.STRING,
   email: { type: DataTypes.STRING, unique: true },
   password: DataTypes.STRING,
-  occupation_id: ENUM(OccupationsEnum),
+  occupation_id: DataTypes.INTEGER, // Alterado de ENUM para INTEGER
 }, {
   tableName: 'user',
   timestamps: false
