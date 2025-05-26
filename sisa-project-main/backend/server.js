@@ -69,7 +69,6 @@ app.get("/api/test", (req, res) => {
     timestamp: new Date().toISOString()
   });
 });
-
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
