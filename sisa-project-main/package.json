@@ -18,5 +18,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "scripts": {
+    "start": "cd backend && npm start",
+    "build": "cd frontend && npm install && npm run build && cd ../backend && npm install",
+    "postinstall": "cd frontend && npm install && cd ../backend && npm install"
   }
 }
