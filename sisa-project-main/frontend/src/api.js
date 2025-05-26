@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: process.env.REACT_APP_API || 'https://teste2-icp3.onrender.com/',
+  baseURL: process.env.REACT_APP_API || 'https://teste2-icp3.onrender.com/api',
   headers: {
     'Content-Type': 'application/json'
   }
@@ -25,5 +25,28 @@ API.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+// Add error logging for development
+if (process.env.NODE_ENV !== 'production') {
+  API.interceptors.request.use(request => {
+    console.log('Starting API Request:', request.url);
+    return request;
+  });
+
+  API.interceptors.response.use(
+    response => {
+      console.log('API Response:', response.status);
+      return response;
+    },
+    error => {
+      console.error('API Error:', {
+        status: error.response?.status,
+        data: error.response?.data,
+        url: error.config?.url
+      });
+      return Promise.reject(error);
+    }
+  );
+}
 
 export default API;
