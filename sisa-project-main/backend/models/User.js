@@ -5,7 +5,7 @@ const User = sequelize.define("user", {
   name: DataTypes.STRING,
   email: { type: DataTypes.STRING, unique: true },
   password: DataTypes.STRING,
-  occupation_id: DataTypes.INTEGER, // Alterado de ENUM para INTEGER
+  occupation_id: DataTypes.INTEGER, // Já configurado como INTEGER
 }, {
   tableName: 'user',
   timestamps: false
