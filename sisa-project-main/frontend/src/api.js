@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: process.env.REACT_APP_API || 'https://teste2-icp3.onrender.com/api',
+  baseURL: process.env.REACT_APP_API || 'https://teste2-icp3.onrender.com/', // Verify this URL
   headers: {
     'Content-Type': 'application/json'
   }

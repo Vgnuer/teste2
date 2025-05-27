@@ -17,23 +17,14 @@ const PORT = process.env.PORT || 5000;
 // Configuração CORS para produção
 const corsOptions = {
   origin: function (origin, callback) {
-    // Permite requisições sem origin (mobile apps, Postman, etc.)
-    if (!origin) return callback(null, true);
-    
-    // Lista de origens permitidas (adicione seus domínios aqui)
     const allowedOrigins = [
-      'https://localhost:3000',
-      'https://127.0.0.1:3000',
-      'http://localhost:3000',
-      'http://127.0.0.1:3000',
-      // Adicione aqui o domínio do seu frontend quando hospedado
-      // 'https://seu-frontend.vercel.app'
+      'https://teste2-1-jceb.onrender.com', // Frontend hospedado
+      'http://localhost:3000', // Desenvolvimento local
     ];
-    
-    if (allowedOrigins.includes(origin)) {
+    if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(null, true); // Para desenvolvimento, permitir todas as origens
+      callback(new Error('Not allowed by CORS'));
     }
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],

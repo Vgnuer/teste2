@@ -14,14 +14,15 @@ export default function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    console.log("Tentando login com:", { email, password }); // Log do payload
     try {
       const res = await API.post("/auth/login", { email, password });
-      console.log(res.data);
+      console.log("Resposta do backend:", res.data); // Log da resposta
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("occupation_id", res.data.user.occupation_id);
       navigate("/dashboard");
     } catch (error) {
-      console.error("Erro detalhado:", error.response?.data || error.message);
+      console.error("Erro ao fazer login:", error.response?.data || error.message);
       alert(error.response?.data?.error || "Erro ao fazer login");
     }
   };
